@@ -6,7 +6,7 @@ A complete, reproducible pipeline that builds a Retrieval-Augmented Generation (
 
 | Step | Description |
 |------|-------------|
-| 1 | Install dependencies |
+| 1 | Install dependencies from requirements.txt |
 | 2 | Load OpenAI API key |
 | 3 | Download Danske Bank 2024 Annual Report (PDF) |
 | 4 | Load & chunk the PDF with explanation of chunking strategy |
@@ -24,6 +24,8 @@ A complete, reproducible pipeline that builds a Retrieval-Augmented Generation (
 
 ### Baseline (chunk_size = 800)
 
+These scores are stable across runs:
+
 | Metric | Score |
 |--------|-------|
 | Faithfulness | 1.000 |
@@ -31,16 +33,15 @@ A complete, reproducible pipeline that builds a Retrieval-Augmented Generation (
 | Answer Relevancy | 0.935 |
 | Context Precision | 0.617 |
 
-### A/B experiment delta (chunk_size 1600 − 800)
+### A/B experiment — chunk_size 800 vs 1600
 
-| Metric | Change |
-|--------|--------|
-| Context Precision | +0.161 |
-| Context Recall | +0.100 |
-| Answer Relevancy | +0.024 |
-| Faithfulness | −0.200 |
+Exact delta values vary slightly between runs due to LLM-as-judge non-determinism (RAGAS uses an LLM to score results — even at temperature=0, OpenAI's API is not perfectly deterministic). The consistent pattern is:
 
-Larger chunks improve retrieval quality but introduce a faithfulness tradeoff. See the Conclusion cell for a full discussion.
+- **Context Precision** improves with larger chunks — fewer off-topic chunks are fetched
+- **Faithfulness** drops with larger chunks — more text in context makes it harder for the model to stay strictly grounded
+- **Context Recall** and **Answer Relevancy** can go either way depending on the run
+
+The notebook auto-prints the actual delta values from each run in the code cell before the Conclusion.
 
 ### Agent (Step 13)
 
