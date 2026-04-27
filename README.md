@@ -24,14 +24,12 @@ A complete, reproducible pipeline that builds a Retrieval-Augmented Generation (
 
 ### Baseline (chunk_size = 800)
 
-These scores are stable across runs:
-
 | Metric | Score |
 |--------|-------|
 | Faithfulness | 1.000 |
 | Context Recall | 0.850 |
-| Answer Relevancy | 0.935 |
-| Context Precision | 0.617 |
+| Answer Relevancy | 0.974 |
+| Context Precision | 0.717 |
 
 ### A/B experiment — chunk_size 800 vs 1600
 
